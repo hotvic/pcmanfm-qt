@@ -948,7 +948,9 @@ void MainWindow::on_actionOpenAsRoot_triggered() {
       QByteArray suCommand = settings.suCommand().toLocal8Bit();
       char* cmd = NULL;
       QByteArray programCommand = app->applicationFilePath().toLocal8Bit();
-      programCommand += " %U";
+      //Note: using profile root as a workaround for changing ownership of the user settings file
+      //(see https://github.com/lxde/lxqt/issues/874)
+      programCommand += " --profile root %U";
 
       if(fm_app_command_parse(suCommand.constData(), su_cmd_opts, &cmd, gpointer(programCommand.constData())) == 0) {
         /* no %s found so just append to it */
